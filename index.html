@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Technical Reporting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --green-primary: #033529; --green-lighter: #065F4A; --green-accent: #17F1BD;
+            --green-highlight: #57FAD3; --mint: #67C3AA; --sunbeam: #F4D35F;
+            --coral: #DF7A5E; --slate: #467C9E; --neutral-light: #E2E0DF;
+            --neutral-bg: #F7F6F5; --text-dark: #1a1a1a; --text-mid: #444;
+            --text-light: #666; --border: #E2E0DF; --white: #FFFFFF;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: transparent; color: var(--text-dark); line-height: 1.6; }
+        .hero { background: linear-gradient(135deg, var(--green-primary) 0%, #021f18 100%); color: white; padding: 3rem 2rem 2.5rem; }
+        .hero-content { max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-size: 44px; font-weight: 500; margin-bottom: 0.75rem; letter-spacing: -0.5px; }
+        .hero p { font-size: 17px; opacity: 0.88; line-height: 1.6; }
+        .intro-band { background: var(--green-lighter); padding: 1rem 2rem; }
+        .intro-band-content { max-width: 900px; margin: 0 auto; }
+        .intro-band p { color: rgba(255,255,255,0.95); font-size: 14px; line-height: 1.7; }
+        .intro-band strong { color: var(--green-highlight); font-weight: 600; }
+        .intro-link { color: var(--green-highlight); text-decoration: underline; text-underline-offset: 2px; font-weight: 500; }
+        .intro-link:hover { color: white; }
+        .intro-frameworks { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.12); }
+        .intro-frameworks-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+        .intro-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+        .intro-pill { display: inline-block; background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.2s ease; }
+        .intro-pill:hover { background: rgba(255,255,255,0.14); color: white; border-color: rgba(255,255,255,0.35); }
+        .quick-nav { background: var(--neutral-bg); padding: 1rem 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .quick-nav-content { max-width: 900px; margin: 0 auto; }
+        .quick-nav h3 { font-size: 11px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); }
+        .quick-nav-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .quick-nav-btn { padding: 7px 14px; background: white; border: 1px solid var(--border); color: var(--green-primary); border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s ease; white-space: nowrap; }
+        .quick-nav-btn:hover { background: #e6f5f0; border-color: var(--mint); color: var(--green-lighter); }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+        .section { margin-bottom: 2rem; background: white; padding: 2rem; border-radius: 10px; border: 1px solid var(--border); }
+        .section-header { margin-bottom: 1.25rem; }
+        .section-title { font-size: 18px; font-weight: 600; color: var(--green-primary); margin-bottom: 4px; }
+        .section-desc { color: var(--text-light); font-size: 14px; }
+        .updates-list { display: flex; flex-direction: column; gap: 10px; }
+        .update-item { padding: 14px 16px; background: var(--neutral-bg); border-radius: 8px; border-left: 3px solid var(--mint); }
+        .update-date { font-weight: 700; color: var(--green-lighter); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+        .update-title { font-weight: 600; color: var(--text-dark); font-size: 14px; margin-bottom: 4px; }
+        .update-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .product-card { padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); background: var(--neutral-bg); transition: all 0.2s ease; }
+        .product-card:hover { border-color: var(--mint); background: #f0faf7; }
+        .product-icon { font-size: 24px; margin-bottom: 10px; }
+        .product-title { font-weight: 600; font-size: 14px; color: var(--green-primary); margin-bottom: 6px; }
+        .product-title a { color: var(--green-lighter); text-decoration: none; }
+        .product-title a:hover { text-decoration: underline; }
+        .product-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+        .product-edition { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: var(--neutral-light); color: var(--text-mid); }
+        .timeline-box { background: var(--neutral-bg); border-radius: 10px; padding: 1.25rem 1rem; border: 1px solid var(--border); margin-bottom: 1.5rem; overflow-x: auto; }
+        .tl-wrap { min-width: 640px; }
+        .tl-year-cell { text-align: center; font-size: 11px; font-weight: 800; color: white; background: var(--green-primary); padding: 4px 2px; border-radius: 3px; }
+        .tl-year-cell.empty { background: transparent; }
+        .tl-header-cell { text-align: center; font-size: 11px; font-weight: 700; color: var(--text-light); padding: 4px 2px; }
+        .tl-header-cell.current { color: var(--green-lighter); font-weight: 800; }
+        .tl-pin { text-align: center; font-size: 14px; line-height: 20px; }
+        .tl-row { display: grid; grid-template-columns: 90px repeat(9, 1fr); gap: 3px; margin-bottom: 3px; min-height: 44px; cursor: pointer; position: relative; }
+        .tl-row-label { font-size: 11px; font-weight: 600; color: var(--text-mid); display: flex; align-items: center; padding-right: 8px; line-height: 1.3; position: relative; }
+        .tl-row:hover .tl-row-label { color: var(--green-lighter); }
+        .tl-row-hint { display: none; position: absolute; left: 0; top: 50%; transform: translateY(-50%); background: var(--green-primary); color: white; font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 10px; white-space: nowrap; pointer-events: none; z-index: 10; margin-top: 22px; letter-spacing: 0.2px; }
+        .tl-row:hover .tl-row-hint { display: block; }
+        .tl-row.selected .tl-row-label { color: var(--green-primary); font-weight: 700; }
+        .tl-block { border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 10px; font-weight: 600; line-height: 1.3; padding: 4px 3px; min-height: 44px; }
+        .tl-empty { background: transparent; }
+        .tl-adapt { background: var(--sunbeam); color: #4a3800; }
+        .tl-entry { background: var(--slate); color: white; }
+        .tl-qa { background: var(--mint); color: #033529; }
+        .tl-reflect { background: var(--coral); color: white; }
+        .tl-report { background: var(--green-lighter); color: white; }
+        .tl-publish { background: var(--green-primary); color: white; }
+        .tl-pn { background: #5B677F; color: white; }
+        .tl-block[data-span="2"] { grid-column: span 2; }
+        .tl-block[data-span="3"] { grid-column: span 3; }
+        .tl-block[data-span="4"] { grid-column: span 4; }
+        .tl-block[data-span="5"] { grid-column: span 5; }
+        .tl-block[data-span="6"] { grid-column: span 6; }
+        .tl-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+        .tl-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-mid); }
+        .tl-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+        .milestones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+        .milestone { padding: 12px 14px; background: white; border-radius: 8px; border: 1px solid var(--border); }
+        .milestone-date { font-weight: 700; color: var(--green-primary); font-size: 13px; margin-bottom: 3px; }
+        .milestone-desc { color: var(--text-mid); font-size: 12px; line-height: 1.5; }
+        .deliverable-card { margin-top: 1.25rem; padding: 1.25rem 1.5rem; background: white; border: 1.5px solid var(--mint); border-radius: 10px; display: none; }
+        .deliverable-card.open { display: block; }
+        .deliverable-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .deliverable-card-title { font-size: 15px; font-weight: 600; color: var(--green-primary); }
+        .deliverable-card-close { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--text-light); padding: 2px 6px; border-radius: 4px; font-family: inherit; line-height: 1; }
+        .deliverable-card-close:hover { background: var(--neutral-bg); color: var(--text-dark); }
+        .deliverable-card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        @media (max-width: 640px) { .deliverable-card-body { grid-template-columns: 1fr; } }
+        .deliverable-card-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 8px; }
+        .deliverable-resource-list { display: flex; flex-direction: column; gap: 6px; }
+        .deliverable-resource-link { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; background: var(--neutral-bg); border-radius: 6px; border: 1px solid var(--border); text-decoration: none; font-size: 12px; color: var(--green-lighter); font-weight: 500; transition: all 0.15s ease; }
+        .deliverable-resource-link:hover { border-color: var(--mint); background: #edf7f3; }
+        .deliverable-faq-list { display: flex; flex-direction: column; gap: 4px; }
+        .deliverable-faq-item { padding: 8px 10px; background: var(--neutral-bg); border-radius: 6px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; transition: all 0.15s ease; }
+        .deliverable-faq-item:hover { border-color: var(--slate); background: #eef2f7; }
+        .deliverable-faq-q { font-weight: 500; color: var(--text-dark); margin-bottom: 0; }
+        .deliverable-faq-a { display: none; color: var(--text-mid); line-height: 1.6; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+        .deliverable-faq-item.open .deliverable-faq-a { display: block; }
+        .deliverable-empty { font-size: 12px; color: var(--text-light); font-style: italic; padding: 6px 2px; }
+        .resource-type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.25rem; }
+        .resource-type-card { text-align: center; padding: 1.25rem 1rem; background: var(--neutral-bg); border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s ease; }
+        .resource-type-card:hover { border-color: var(--mint); background: #f0faf7; }
+        .resource-type-card.active { border-color: var(--green-lighter); background: #e6f5f0; }
+        .resource-type-icon { font-size: 26px; margin-bottom: 10px; }
+        .resource-type-title { font-size: 13px; font-weight: 600; color: var(--green-primary); margin-bottom: 6px; }
+        .resource-type-desc { font-size: 12px; color: var(--text-light); }
+        .expandable-content { display: none; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+        .expandable-content.open { display: block; }
+        .resource-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 0.75rem; }
+        .resource-item { padding: 12px 14px; background: var(--neutral-bg); border-radius: 8px; border: 1px solid var(--border); font-size: 13px; }
+        .resource-item-title { font-weight: 600; color: var(--green-lighter); margin-bottom: 4px; }
+        .resource-item-title a { color: var(--green-lighter); text-decoration: none; }
+        .resource-item-title a:hover { text-decoration: underline; }
+        .resource-item-desc { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
+        .resource-badge { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 8px; background: var(--neutral-light); color: var(--text-light); letter-spacing: 0.3px; }
+        .faq-tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border-bottom: 2px solid var(--border); overflow-x: auto; }
+        .faq-tab { padding: 9px 16px; background: transparent; border: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-light); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s ease; white-space: nowrap; font-family: inherit; }
+        .faq-tab:hover { color: var(--green-lighter); }
+        .faq-tab.active { color: var(--green-lighter); border-bottom-color: var(--green-lighter); font-weight: 600; }
+        .faq-content { display: none; }
+        .faq-content.active { display: block; }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-question { padding: 14px 4px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; background: white; border: none; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text-dark); transition: color 0.2s ease; }
+        .faq-question:hover { color: var(--green-lighter); }
+        .faq-toggle { display: inline-block; transition: transform 0.2s ease; font-size: 11px; margin-left: 12px; color: var(--text-light); flex-shrink: 0; }
+        .faq-toggle.open { transform: rotate(180deg); }
+        .faq-answer { padding: 0 4px 14px; font-size: 13px; color: var(--text-mid); line-height: 1.75; display: none; }
+        .faq-answer.open { display: block; }
+        .help-box { padding: 1.5rem; background: #FFFBEB; border-radius: 10px; border: 1px solid #FDE68A; }
+        .help-box h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #78350F; }
+        .help-box p { margin-bottom: 12px; font-size: 14px; color: #78350F; opacity: 0.9; }
+        .help-btn { display: inline-block; background: var(--green-primary); color: white; border: none; padding: 9px 18px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 500; font-family: inherit; text-decoration: none; transition: background 0.2s; }
+        .help-btn:hover { background: var(--green-lighter); }
+        .contact-info { margin-top: 14px; padding: 12px 14px; background: white; border-radius: 8px; font-size: 13px; color: var(--text-mid); border: 1px solid #FDE68A; }
+        .contact-info a { color: var(--green-lighter); text-decoration: none; font-weight: 500; }
+        .contact-info a:hover { text-decoration: underline; }
+        .loading { color: #999; font-size: 13px; font-style: italic; padding: 0.75rem 0; }
+        .error-msg { color: #c0392b; font-size: 13px; padding: 1rem; background: #fdf2f2; border-radius: 6px; border-left: 3px solid #c0392b; }
+        .offline-msg { font-size: 13px; padding: 1rem; background: #fffbeb; border-radius: 6px; border-left: 3px solid #f59e0b; color: #78350f; }
+        .rp-chev { flex: 1; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; min-width: 36px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%); }
+        .rp-chev-cur { background: var(--sunbeam); color: var(--green-primary); }
+        .coming-soon-box { text-align: center; padding: 2.5rem 1rem; background: var(--neutral-bg); border-radius: 8px; border: 1.5px dashed var(--neutral-light); }
+        .coming-soon-icon { font-size: 28px; margin-bottom: 10px; }
+        .coming-soon-title { font-size: 15px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+        .coming-soon-desc { font-size: 13px; color: var(--text-light); max-width: 360px; margin: 0 auto; }
+        @media (max-width: 768px) { .hero h1 { font-size: 30px; } .section { padding: 1.25rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>2026 Technical Reporting</h1>
+            <p>Resources, guidance and tools to support results reporting across CGIAR.</p>
+        </div>
+    </div>
+
+    <div class="intro-band">
+        <div class="intro-band-content">
+            <p>Technical reporting is a core CGIAR accountability requirement, enabling the System Organization to meet its obligations to funders, governance bodies, and stakeholders. These obligations are established through the <a href="https://hdl.handle.net/10568/152185" class="intro-link" target="_blank">Charter of the CGIAR System Organization</a>, and are operationalized through the <a href="https://hdl.handle.net/10568/113793" class="intro-link" target="_blank">Performance and Results Management Framework</a> and the <a href="https://storage.googleapis.com/cgiarorg/2025/06/CGIAR-Technical-Reporting-Arrangement-2025-30.pdf" class="intro-link" target="_blank">Technical Reporting Arrangement 2025–2030</a>.</p>
+            <p style="color:rgba(255,255,255,0.95);font-size:14px;line-height:1.7;margin-top:0.75rem;">As a key step of CGIAR's Adaptive Management Cycle, technical reporting brings together results from Programs &amp; Accelerators, Centers, and the System Organization — including W1/W2 and mapped W3/bilateral projects — to assess performance, support learning, and inform decision-making.</p>
+            <p style="color:rgba(255,255,255,0.95);font-size:14px;line-height:1.7;margin-top:0.75rem;">It culminates in CGIAR's principal reporting products: the Program &amp; Accelerator Annual Technical Reports, the Results Dashboard, and the Portfolio Narrative.</p>
+            <div class="intro-frameworks">
+                <div class="intro-frameworks-label">Underpinned by</div>
+                <div class="intro-pills">
+                    <a href="https://hdl.handle.net/10568/113793" class="intro-pill" target="_blank">Performance and Results Management Framework 2022&#x2013;2030</a>
+                    <a href="https://storage.googleapis.com/cgiarorg/2025/06/CGIAR-Technical-Reporting-Arrangement-2025-30.pdf" class="intro-pill" target="_blank">Technical Reporting Arrangement 2025&#x2013;2030</a>
+                    <a href="https://docs.google.com/document/d/1Co0t0B5Ybb9p6Vq-q9bwRaRbB0gnDksS/edit" class="intro-pill" target="_blank">CGIAR Results Framework</a>
+                    <a href="https://docs.google.com/document/d/19V8HwQN50riKrU7GomHQ4J8_aBuyngrh/edit?usp=drive_link&ouid=100701138371542982320&rtpof=true&sd=true" class="intro-pill" target="_blank">MELIA Glossary</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-nav">
+        <div class="quick-nav-content">
+            <h3>Quick navigation</h3>
+            <div class="quick-nav-grid">
+                <button class="quick-nav-btn" onclick="scrollToSection('updates')">&#128226; Latest updates</button>
+                <button class="quick-nav-btn" onclick="scrollToSection('timeline')">&#128197; Timeline &amp; deliverables</button>
+                <button class="quick-nav-btn" onclick="scrollToSection('resources')">&#128218; Resources &amp; guidance</button>
+                <button class="quick-nav-btn" onclick="scrollToSection('products')">&#128196; Reporting products</button>
+                <button class="quick-nav-btn" onclick="scrollToSection('faqs')">&#10067; FAQs</button>
+                <button class="quick-nav-btn" onclick="scrollToSection('help')">&#128172; Help</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="section" id="updates">
+            <div class="section-header">
+                <h2 class="section-title">Latest updates</h2>
+                <p class="section-desc">Important announcements and recent changes.</p>
+            </div>
+            <div class="updates-list" id="updates-list">
+                <p class="loading">Loading updates...</p>
+            </div>
+        </div>
+
+        <div class="section" id="timeline">
+            <div class="section-header">
+                <h2 class="section-title">Timeline &amp; deliverables</h2>
+                <p class="section-desc">2026 reporting cycle &#x2014; key phases and milestones.</p>
+            </div>
+            <div class="timeline-box">
+                <div class="tl-wrap">
+                    <div style="display:grid;grid-template-columns:90px repeat(9,1fr);gap:3px;margin-bottom:2px;">
+                        <div class="tl-year-cell empty"></div>
+                        <div class="tl-year-cell" style="grid-column:span 3;border-radius:3px;">2025</div>
+                        <div class="tl-year-cell" style="grid-column:span 6;border-radius:3px;">2026</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:90px repeat(9,1fr);gap:3px;margin-bottom:4px;">
+                        <div class="tl-header-cell"></div>
+                        <div class="tl-header-cell current">Jun</div>
+                        <div class="tl-header-cell">Jul&#x2013;Aug</div>
+                        <div class="tl-header-cell">Sep&#x2013;Nov</div>
+                        <div class="tl-header-cell">Dec&#x2013;Jan</div>
+                        <div class="tl-header-cell">Feb</div>
+                        <div class="tl-header-cell">Mar</div>
+                        <div class="tl-header-cell">Apr</div>
+                        <div class="tl-header-cell">May</div>
+                        <div class="tl-header-cell">Jun</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:90px repeat(9,1fr);gap:3px;margin-bottom:6px;height:20px;">
+                        <div></div><div class="tl-pin">&#128205;</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                    </div>
+                    <div class="tl-row" data-deliverable="prepare" onclick="openDeliverableCard('prepare')">
+                        <div class="tl-row-label">Prepare &amp; engage<span class="tl-row-hint">Click to see resources &amp; FAQs</span></div>
+                        <div class="tl-block tl-adapt" style="grid-column:2/span 1;">Adapt &amp; prepare</div>
+                        <div class="tl-block tl-adapt" style="grid-column:3/span 2;">Learning &amp; optimization; guidance updated</div>
+                        <div class="tl-block tl-adapt" style="grid-column:5/span 1;">Reporting guidance released; info sessions</div>
+                        <div class="tl-block tl-reflect" style="grid-column:7/span 1;">Reflect</div>
+                    </div>
+                    <div class="tl-row" data-deliverable="prms" onclick="openDeliverableCard('prms')">
+                        <div class="tl-row-label">PRMS reporting &amp; QA<span class="tl-row-hint">Click to see resources &amp; FAQs</span></div>
+                        <div class="tl-block tl-entry" style="grid-column:5/span 1;">Technical reporting open in PRMS</div>
+                        <div class="tl-block tl-qa" style="grid-column:6/span 1;">Quality assurance</div>
+                        <div class="tl-block tl-report" style="grid-column:7/span 1;">Results available on Results Dashboard</div>
+                    </div>
+                    <div class="tl-row" data-deliverable="atr" onclick="openDeliverableCard('atr')">
+                        <div class="tl-row-label">Annual Technical Report<span class="tl-row-hint">Click to see resources &amp; FAQs</span></div>
+                        <div class="tl-block tl-report" style="grid-column:7/span 1;">Annual Technical Report development</div>
+                        <div class="tl-block tl-report" style="grid-column:8/span 1;">Editing &amp; P/A validation</div>
+                        <div class="tl-block tl-publish" style="grid-column:9/span 1;">Annual Technical Reports published</div>
+                    </div>
+                    <div class="tl-row" data-deliverable="pn" onclick="openDeliverableCard('pn')">
+                        <div class="tl-row-label">Portfolio Narrative<span class="tl-row-hint">Click to see resources &amp; FAQs</span></div>
+                        <div class="tl-block tl-pn" style="grid-column:7/span 2;">Content development &amp; editing</div>
+                        <div class="tl-block tl-pn" style="grid-column:9/span 1;">Review &amp; approval</div>
+                        <div class="tl-block tl-publish" style="grid-column:10/span 1;">Portfolio Narrative published</div>
+                    </div>
+                </div>
+                <div class="tl-legend">
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--sunbeam);"></div>Adapt &amp; prepare</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--slate);"></div>Data entry</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--mint);"></div>Quality assurance</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--coral);"></div>Reflect</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--green-lighter);"></div>Report development</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#5B677F;"></div>Portfolio Narrative</div>
+                    <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--green-primary);"></div>Publication</div>
+                </div>
+            </div>
+            <div class="milestones-grid" id="milestones-grid"><p class="loading">Loading key dates...</p></div>
+            <div id="deliverable-cards-container"></div>
+        </div>
+
+        <div class="section" id="resources">
+            <div class="section-header">
+                <h2 class="section-title">Resources &amp; guidance</h2>
+                <p class="section-desc">Templates, tools, and guidance organized by category.</p>
+            </div>
+            <div class="resource-type-grid" id="resource-type-grid"><p class="loading">Loading resources...</p></div>
+            <div id="resource-expandables"></div>
+        </div>
+
+        <div class="section" id="products">
+            <div class="section-header">
+                <h2 class="section-title">Reporting products</h2>
+                <p class="section-desc">CGIAR's reporting products span annual, triennial, and cumulative timeframes. Links to the latest editions are included where available. The full 2025–2030 delivery schedule follows.</p>
+            </div>
+            <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <thead>
+                    <tr style="background:var(--green-primary);color:white;">
+                        <th style="padding:9px 12px;text-align:left;font-weight:600;border-radius:6px 0 0 0;width:24%;">Reporting product</th>
+                        <th style="padding:9px 12px;text-align:left;font-weight:600;">Content overview</th>
+                        <th style="padding:9px 12px;text-align:left;font-weight:600;width:14%;">Cadence</th>
+                        <th style="padding:9px 12px;text-align:left;font-weight:600;border-radius:0 6px 0 0;width:14%;">Latest edition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:10px 12px;font-weight:600;color:var(--green-primary);vertical-align:top;">Program/Accelerator Reports</td>
+                        <td style="padding:10px 12px;color:var(--text-mid);vertical-align:top;">Annual per-Program/Accelerator progress towards end of delivery outcomes</td>
+                        <td style="padding:10px 12px;vertical-align:top;"><span style="background:#e6f5f0;color:var(--green-lighter);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;">Annual</span></td>
+                        <td style="padding:10px 12px;vertical-align:top;"><a href="https://www.cgiar.org/publications?f%5B0%5D=collections_name%3ACGIAR+2030+Annual+Technical+Reports" target="_blank" style="color:var(--green-lighter);font-size:12px;font-weight:500;">2025 edition ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);background:var(--neutral-bg);">
+                        <td style="padding:10px 12px;font-weight:600;color:var(--green-primary);vertical-align:top;">Portfolio Report</td>
+                        <td style="padding:10px 12px;color:var(--text-mid);vertical-align:top;">Aggregated Portfolio contribution to thematic and geographic objectives. Internal practice change aspects including status of Management Response Action implementation.</td>
+                        <td style="padding:10px 12px;vertical-align:top;"><span style="background:#e6f5f0;color:var(--green-lighter);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;">Annual</span></td>
+                        <td style="padding:10px 12px;vertical-align:top;"><a href="https://hdl.handle.net/10568/182797" target="_blank" style="color:var(--green-lighter);font-size:12px;font-weight:500;">2025 edition ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:10px 12px;font-weight:600;color:var(--green-primary);vertical-align:top;">Results Dashboard</td>
+                        <td style="padding:10px 12px;color:var(--text-mid);vertical-align:top;">Quality-assured data available raw and in curated programmatic, thematic and geographic reports.</td>
+                        <td style="padding:10px 12px;vertical-align:top;"><span style="background:#eef2f7;color:var(--slate);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;">Sub-annual</span></td>
+                        <td style="padding:10px 12px;vertical-align:top;"><a href="https://www.cgiar.org/food-security-impact/results-dashboard" target="_blank" style="color:var(--green-lighter);font-size:12px;font-weight:500;">View dashboard ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);background:var(--neutral-bg);">
+                        <td style="padding:10px 12px;font-weight:600;color:var(--green-primary);vertical-align:top;">Portfolio Outcome and Impact Report</td>
+                        <td style="padding:10px 12px;color:var(--text-mid);vertical-align:top;">Consolidated triennial contribution to Portfolio Outcomes and Impact targets covering the periods 2025–27 and 2028–30.</td>
+                        <td style="padding:10px 12px;vertical-align:top;"><span style="background:#eef2f7;color:var(--slate);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;">Triennial (2028 &amp; 2031)</span></td>
+                        <td style="padding:10px 12px;vertical-align:top;color:var(--text-light);font-size:12px;">Due 2028</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px;font-weight:600;color:var(--green-primary);vertical-align:top;">Thematic Impact 2022–2030 Report</td>
+                        <td style="padding:10px 12px;color:var(--text-mid);vertical-align:top;">Macro-level view of CGIAR's role in Food, Land and Water System Transformation covering the period 2022–2030.</td>
+                        <td style="padding:10px 12px;vertical-align:top;"><span style="background:#f5f0fa;color:#6b4c9a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;">Once, in 2031</span></td>
+                        <td style="padding:10px 12px;vertical-align:top;color:var(--text-light);font-size:12px;">Due 2031</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+                <h3 style="font-size:15px;font-weight:600;color:var(--green-primary);margin-bottom:4px;">Reporting product delivery schedule 2025–2030</h3>
+                <p style="font-size:13px;color:var(--text-light);margin-bottom:1.5rem;">All reporting products progressively integrate pooled and W3/bilateral content.</p>
+                <div style="display:grid;grid-template-columns:80px repeat(6,1fr) 36px;column-gap:2px;row-gap:4px;margin-bottom:1.25rem;min-width:520px;overflow-x:auto;">
+                    <div></div>
+                    <div class="rp-chev rp-chev-cur" style="clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);">2025</div>
+                    <div class="rp-chev rp-chev-cur">2026</div>
+                    <div class="rp-chev rp-chev-cur">2027</div>
+                    <div class="rp-chev rp-chev-cur">2028</div>
+                    <div class="rp-chev rp-chev-cur">2029</div>
+                    <div class="rp-chev rp-chev-cur" style="clip-path:polygon(0 0,100% 0,100% 100%,0 100%,10px 50%);">2030</div>
+                    <div style="font-size:9px;font-weight:700;color:var(--text-light);display:flex;align-items:center;justify-content:center;">2031</div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text-light);display:flex;align-items:center;">Annual</div>
+                    <div style="grid-column:span 6;background:var(--green-lighter);border-radius:3px;height:14px;"></div>
+                    <div></div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text-light);display:flex;align-items:center;">Triennial</div>
+                    <div style="grid-column:span 3;background:#c5d8e8;border-radius:3px 0 0 3px;height:14px;"></div>
+                    <div style="background:var(--slate);height:14px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">2028</div>
+                    <div style="grid-column:span 2;background:#c5d8e8;height:14px;"></div>
+                    <div style="background:var(--slate);border-radius:3px;height:14px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">2031</div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text-light);display:flex;align-items:center;">2022–2030</div>
+                    <div style="grid-column:span 6;background:#c5ddd6;border-radius:3px 0 0 3px;height:14px;"></div>
+                    <div style="background:var(--green-primary);border-radius:3px;height:14px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">2031</div>
+                </div>
+                <p style="font-size:11px;color:var(--text-light);margin-top:8px;font-style:italic;">Source: Technical Reporting Arrangement 2025–2030</p>
+            </div>
+        </div>
+
+        <div class="section" id="faqs">
+            <div class="section-header">
+                <h2 class="section-title">Frequently asked questions</h2>
+                <p class="section-desc">Click a tab to view questions and answers by category.</p>
+            </div>
+            <div id="faq-container"><p class="loading">Loading FAQs...</p></div>
+        </div>
+
+        <div class="section" id="help">
+            <div class="section-header"><h2 class="section-title">Need help?</h2></div>
+            <div class="help-box">
+                <h3>Reporting assistant</h3>
+                <p>The Reporting Assistant (AI-powered chatbot) can answer your questions 24/7.</p>
+                <a class="help-btn" href="https://sites.google.com/cgxchange.org/cgiarprhub/chatbot-helper" target="_blank">Open chatbot &#x2192;</a>
+                <div class="contact-info">
+                    <strong>If the chatbot doesn&#x2019;t find the answer you&#x2019;re looking for, please email:</strong><br><br>
+                    <strong>General reporting questions:</strong> <a href="mailto:performanceandresults@cgiar.org">performanceandresults@cgiar.org</a><br>
+                    <strong>Technical issues:</strong> <a href="mailto:prmstechsupport@cgiar.org">prmstechsupport@cgiar.org</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ── CONFIGURATION ─────────────────────────────────────────────────────────
+        // Remove a section ID from this array to publish it (show real content).
+        const COMING_SOON = ['timeline', 'resources', 'faqs'];
+
+        const SHEET_URLS = {
+            updates:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=540087119&single=true&output=csv',
+            keydates:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=556828724&single=true&output=csv',
+            resources:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=135504629&single=true&output=csv',
+            faqs:         'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=1731522822&single=true&output=csv',
+            deliverables: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=1581725204&single=true&output=csv',
+            timeline:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdLzJaRCyKNipokCgWbnKV-37wzvKP4vEokEq1PoCewNWZj_2YoeP6aweEf0dIevO_4ySQRoX6oiWo/pub?gid=395468944&single=true&output=csv'
+        };
+
+        if (window.location.protocol === 'file:') {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.loading').forEach(el => {
+                    el.className = 'offline-msg';
+                    el.innerHTML = '&#x26A0;&#xFE0F; Live content can\'t load when this file is opened locally. <strong>Open the hosted version</strong> to see updates, key dates, resources and FAQs.';
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            COMING_SOON.forEach(id => {
+                const section = document.getElementById(id);
+                if (!section) return;
+                Array.from(section.children).forEach(child => {
+                    if (!child.classList.contains('section-header')) child.style.display = 'none';
+                });
+                const box = document.createElement('div');
+                box.className = 'coming-soon-box';
+                box.innerHTML = '<div class="coming-soon-icon">&#x1F527;</div><div class="coming-soon-title">In development</div><div class="coming-soon-desc">This section is being developed and will be available here soon.</div>';
+                section.appendChild(box);
+            });
+        });
+
+        let DELIVERABLES = {
+            prepare: { title: 'Prepare & engage', desc: 'Guidance and tools to help Programs prepare for the reporting cycle.', resources: [], faqTags: ['preparation', 'guidance', 'timeline'] },
+            prms:    { title: 'PRMS reporting & QA', desc: 'Data entry in PRMS for all results, followed by quality assurance before publication on the Results Dashboard.', resources: [], faqTags: ['prms', 'data entry', 'quality', 'results'] },
+            atr:     { title: 'Annual Technical Report', desc: 'Each Program and Accelerator develops an Annual Technical Report documenting results achieved.', resources: [], faqTags: ['annual technical report', 'atr', 'writing', 'editing'] },
+            pn:      { title: 'Portfolio Narrative', desc: 'A synthesis document presenting CGIAR\'s collective results and Portfolio performance.', resources: [], faqTags: ['portfolio narrative', 'synthesis'] }
+        };
+        let ALL_FAQS = [];
+
+        async function loadDeliverables() {
+            if (COMING_SOON.includes('timeline') || window.location.protocol === 'file:') return;
+            try {
+                const rows = await fetchCSV(SHEET_URLS.deliverables);
+                const loaded = {};
+                rows.forEach(r => {
+                    const id = (r.ID || '').trim().toLowerCase(); if (!id) return;
+                    if (!loaded[id]) loaded[id] = { title: r.Title || DELIVERABLES[id]?.title || id, desc: r.Description || DELIVERABLES[id]?.desc || '', resources: [], faqTags: [] };
+                    if (r.ResourceTitle && r.ResourceURL) loaded[id].resources.push({ title: r.ResourceTitle, url: r.ResourceURL });
+                    if (r.FAQTag) loaded[id].faqTags.push(r.FAQTag.toLowerCase());
+                });
+                if (Object.keys(loaded).length > 0) DELIVERABLES = loaded;
+            } catch(e) {}
+        }
+
+        function closeDeliverableCard(id) {
+            document.getElementById('del-card-' + id)?.classList.remove('open');
+            document.querySelector('.tl-row[data-deliverable="' + id + '"]')?.classList.remove('selected');
+        }
+
+        function openDeliverableCard(id) {
+            if (COMING_SOON.includes('timeline')) return;
+            const deliverable = DELIVERABLES[id]; if (!deliverable) return;
+            const existing = document.getElementById('del-card-' + id);
+            if (existing && existing.classList.contains('open')) { existing.classList.remove('open'); document.querySelector(`.tl-row[data-deliverable="${id}"]`)?.classList.remove('selected'); return; }
+            document.querySelectorAll('.tl-row').forEach(r => r.classList.remove('selected'));
+            document.querySelectorAll('.deliverable-card').forEach(c => c.classList.remove('open'));
+            document.querySelector(`.tl-row[data-deliverable="${id}"]`)?.classList.add('selected');
+            const container = document.getElementById('deliverable-cards-container');
+            let card = document.getElementById('del-card-' + id);
+            if (!card) { card = document.createElement('div'); card.className = 'deliverable-card'; card.id = 'del-card-' + id; container.appendChild(card); }
+            const tags = deliverable.faqTags || [];
+            const matchedFAQs = ALL_FAQS.filter(f => { const q=(f.Question||'').toLowerCase(),a=(f.Answer||'').toLowerCase(),t=(f.Tab||'').toLowerCase(); return tags.some(tag=>q.includes(tag)||a.includes(tag)||t.includes(tag)); }).slice(0,5);
+            const rHTML = deliverable.resources.length ? deliverable.resources.map(r=>`<a class="deliverable-resource-link" href="${r.url}" target="_blank">&#128196; ${r.title}</a>`).join('') : '<p class="deliverable-empty">No resources linked yet.</p>';
+            const fHTML = matchedFAQs.length ? matchedFAQs.map(f=>`<div class="deliverable-faq-item" onclick="this.classList.toggle('open')"><div class="deliverable-faq-q">${f.Question||''}</div><div class="deliverable-faq-a">${f.Answer||''}</div></div>`).join('') : '<p class="deliverable-empty">No matching FAQs found.</p>';
+            card.innerHTML = `<div class="deliverable-card-header"><div class="deliverable-card-title">&#128204; ${deliverable.title}</div><button class="deliverable-card-close" onclick="closeDeliverableCard('${id}')">&#x2715;</button></div><p style="font-size:13px;color:var(--text-mid);margin-bottom:1rem;line-height:1.6;">${deliverable.desc}</p><div class="deliverable-card-body"><div><div class="deliverable-card-section-title">&#128218; Resources &amp; guidance</div><div class="deliverable-resource-list">${rHTML}</div></div><div><div class="deliverable-card-section-title">&#10067; Related FAQs</div><div class="deliverable-faq-list">${fHTML}</div></div></div>`;
+            card.classList.add('open');
+            setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
+
+        async function renderTimeline() {
+            if (COMING_SOON.includes('timeline') || window.location.protocol === 'file:') return;
+            if (!SHEET_URLS.timeline) return;
+            const wrap = document.querySelector('.tl-wrap'); if (!wrap) return;
+            try {
+                const rows = await fetchCSV(SHEET_URLS.timeline);
+                const monthRows = rows.filter(r=>(r.Section||'').toLowerCase()==='month').sort((a,b)=>parseInt(a.Col)-parseInt(b.Col));
+                const blockRows = rows.filter(r=>(r.Section||'').toLowerCase()==='block');
+                if (!monthRows.length||!blockRows.length) return;
+                const numCols=monthRows.length, gc=`90px repeat(${numCols},1fr)`;
+                const yearGroups=[];
+                monthRows.forEach(m=>{ const y=m.Year||''; if(!yearGroups.length||yearGroups[yearGroups.length-1].year!==y) yearGroups.push({year:y,span:1}); else yearGroups[yearGroups.length-1].span++; });
+                const pinIdx=monthRows.findIndex(m=>(m.PinHere||'').toUpperCase()==='TRUE');
+                const rowOrder=[],rowMap={};
+                blockRows.forEach(b=>{ const id=(b.RowID||'').trim(); if(!id) return; if(!rowMap[id]){rowMap[id]={label:'',blocks:[]};rowOrder.push(id);} if(b.RowLabel) rowMap[id].label=b.RowLabel; rowMap[id].blocks.push(b); });
+                const typeMap={adapt:'tl-adapt',entry:'tl-entry',qa:'tl-qa',reflect:'tl-reflect',report:'tl-report',publish:'tl-publish',pn:'tl-pn'};
+                wrap.innerHTML=`<div style="display:grid;grid-template-columns:${gc};gap:3px;margin-bottom:2px;"><div class="tl-year-cell empty"></div>${yearGroups.map(g=>`<div class="tl-year-cell" style="grid-column:span ${g.span};border-radius:3px;">${g.year}</div>`).join('')}</div><div style="display:grid;grid-template-columns:${gc};gap:3px;margin-bottom:4px;"><div class="tl-header-cell"></div>${monthRows.map((m,i)=>`<div class="tl-header-cell${i===pinIdx?' current':''}">${m.Label||''}</div>`).join('')}</div><div style="display:grid;grid-template-columns:${gc};gap:3px;margin-bottom:6px;height:20px;"><div></div>${monthRows.map((_,i)=>`<div class="tl-pin">${i===pinIdx?'&#128205;':''}</div>`).join('')}</div>${rowOrder.map(id=>{const row=rowMap[id];const bHTML=row.blocks.map(b=>{const col=parseInt(b.Col)||1,span=parseInt(b.Span)||1,cls=typeMap[(b.Type||'').toLowerCase()]||'tl-empty';return `<div class="tl-block ${cls}" style="grid-column:${col+1}/span ${span};">${b.Label||''}</div>`;}).join('');return `<div class="tl-row" data-deliverable="${id}" onclick="openDeliverableCard('${id}')" style="display:grid;grid-template-columns:${gc};gap:3px;margin-bottom:3px;min-height:44px;"><div class="tl-row-label">${row.label}<span class="tl-row-hint">Click to see resources &amp; FAQs</span></div>${bHTML}</div>`;}).join('')}`;
+            } catch(e) {}
+        }
+
+        async function fetchCSV(url) { const res=await fetch(url); if(!res.ok) throw new Error('err'); return parseCSV(await res.text()); }
+
+        function parseCSV(text) {
+            const rows=[]; let row=[],field='',inQuote=false;
+            for(let i=0;i<text.length;i++){const ch=text[i],next=text[i+1];if(inQuote){if(ch==='"'&&next==='"'){field+='"';i++;}else if(ch==='"'){inQuote=false;}else{field+=ch;}}else{if(ch==='"'){inQuote=true;}else if(ch===','){row.push(field.trim());field='';}else if(ch==='\n'){row.push(field.trim());rows.push(row);row=[];field='';}else if(ch==='\r'){}else{field+=ch;}}}
+            if(field||row.length){row.push(field.trim());rows.push(row);}
+            const headers=rows[1];
+            return rows.slice(2).filter(r=>r.some(c=>c)).map(r=>{const obj={};headers.forEach((h,i)=>obj[h.trim()]=(r[i]||'').trim());return obj;});
+        }
+
+        async function renderUpdates() {
+            if(window.location.protocol==='file:') return;
+            const el=document.getElementById('updates-list');
+            try { const rows=await fetchCSV(SHEET_URLS.updates); if(!rows.length){el.innerHTML='<p class="loading">No updates at this time.</p>';return;} el.innerHTML=rows.map(r=>`<div class="update-item"><div class="update-date">${r.Date||''}</div><div class="update-title">${r.Title||''}</div><div class="update-desc">${r.Description||''}</div></div>`).join(''); } catch(e){el.innerHTML='<p class="error-msg">Could not load updates.</p>';}
+        }
+
+        async function renderKeyDates() {
+            if(COMING_SOON.includes('timeline')||window.location.protocol==='file:') return;
+            const el=document.getElementById('milestones-grid');
+            try { const rows=await fetchCSV(SHEET_URLS.keydates); if(!rows.length){el.innerHTML='';return;} el.innerHTML=rows.map(r=>`<div class="milestone"><div class="milestone-date">${r.Date||''}</div><div class="milestone-desc">${r.Description||''}</div></div>`).join(''); } catch(e){el.innerHTML='<p class="error-msg">Could not load key dates.</p>';}
+        }
+
+        async function renderResources() {
+            if(COMING_SOON.includes('resources')||window.location.protocol==='file:') return;
+            const gridEl=document.getElementById('resource-type-grid'),expandEl=document.getElementById('resource-expandables');
+            try {
+                const rows=await fetchCSV(SHEET_URLS.resources),categories={},categoryMeta={};
+                rows.forEach(r=>{const cat=r.Category||'Other';if(!categories[cat]){categories[cat]=[];categoryMeta[cat]={icon:r.CategoryIcon||'&#128196;',desc:r.CategoryDesc||''};}categories[cat].push(r);});
+                gridEl.innerHTML=Object.keys(categories).map(cat=>`<div class="resource-type-card" onclick="toggleResourceType(this,'${slugify(cat)}')"><div class="resource-type-icon">${categoryMeta[cat].icon}</div><div class="resource-type-title">${cat}</div><div class="resource-type-desc">${categoryMeta[cat].desc}</div></div>`).join('');
+                expandEl.innerHTML=Object.keys(categories).map(cat=>`<div class="expandable-content" id="expand-${slugify(cat)}"><h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;color:var(--green-primary);">${cat}</h3><div class="resource-list">${categories[cat].map(r=>`<div class="resource-item"><div class="resource-item-title">${r.URL?`<a href="${r.URL}" target="_blank">${r.Title||''}</a>`:(r.Title||'')}</div><div class="resource-item-desc">${r.Description||''}</div>${!r.URL?'<span class="resource-badge">In development</span>':''}</div>`).join('')}</div></div>`).join('');
+            } catch(e){gridEl.innerHTML='<p class="error-msg">Could not load resources.</p>';}
+        }
+
+        function slugify(str){return str.toLowerCase().replace(/[^a-z0-9]+/g,'-');}
+        function toggleResourceType(card,categoryId){const isOpen=card.classList.contains('active');document.querySelectorAll('.resource-type-card').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.expandable-content').forEach(e=>e.classList.remove('open'));if(!isOpen){card.classList.add('active');const p=document.getElementById('expand-'+categoryId);if(p)p.classList.add('open');}}
+
+        async function renderFAQs() {
+            if(COMING_SOON.includes('faqs')||window.location.protocol==='file:') return;
+            const container=document.getElementById('faq-container');
+            try {
+                const rows=await fetchCSV(SHEET_URLS.faqs); ALL_FAQS=rows;
+                const tabs={};rows.forEach(r=>{const tab=r.Tab||'General';if(!tabs[tab])tabs[tab]=[];tabs[tab].push(r);});
+                const tabKeys=Object.keys(tabs);
+                container.innerHTML=`<div class="faq-tabs">${tabKeys.map((tab,i)=>`<button class="faq-tab ${i===0?'active':''}" onclick="switchFAQTab(this,'faq-${slugify(tab)}')">${tab}</button>`).join('')}</div>${tabKeys.map((tab,i)=>`<div class="faq-content ${i===0?'active':''}" id="faq-${slugify(tab)}">${tabs[tab].map(r=>`<div class="faq-item"><button class="faq-question" onclick="toggleFAQ(this)"><span>${r.Question||''}</span><span class="faq-toggle">&#9660;</span></button><div class="faq-answer">${r.Answer||''}</div></div>`).join('')}</div>`).join('')}`;
+            } catch(e){container.innerHTML='<p class="error-msg">Could not load FAQs.</p>';}
+        }
+
+        function switchFAQTab(tab,tabId){document.querySelectorAll('.faq-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.faq-content').forEach(c=>c.classList.remove('active'));document.getElementById(tabId).classList.add('active');}
+        function toggleFAQ(button){const answer=button.parentElement.querySelector('.faq-answer'),toggle=button.querySelector('.faq-toggle'),tab=button.closest('.faq-content');if(tab){tab.querySelectorAll('.faq-answer').forEach(a=>{if(a!==answer)a.classList.remove('open');});tab.querySelectorAll('.faq-toggle').forEach(t=>{if(t!==toggle)t.classList.remove('open');});}toggle.classList.toggle('open');answer.classList.toggle('open');}
+        function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+        loadDeliverables();
+        renderUpdates();
+        renderKeyDates();
+        renderTimeline();
+        renderResources();
+        renderFAQs();
+    </script>
+</body>
+</html>
