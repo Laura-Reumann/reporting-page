@@ -100,6 +100,14 @@
         .deliverable-resource-list { display: flex; flex-direction: column; gap: 6px; }
         .deliverable-resource-link { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; background: var(--neutral-bg); border-radius: 6px; border: 1px solid var(--border); text-decoration: none; font-size: 12px; color: var(--green-lighter); font-weight: 500; transition: all 0.15s ease; }
         .deliverable-resource-link:hover { border-color: var(--mint); background: #edf7f3; }
+        .deliverable-faq-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .deliverable-faq-chip {
+            display: inline-block; padding: 5px 12px; background: #eef2f7;
+            border: 1px solid var(--border); border-radius: 20px; font-size: 12px;
+            color: var(--slate); font-weight: 500; text-decoration: none; cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .deliverable-faq-chip:hover { background: var(--slate); color: white; border-color: var(--slate); }
         .deliverable-faq-list { display: flex; flex-direction: column; gap: 4px; }
         .deliverable-faq-item { padding: 8px 10px; background: var(--neutral-bg); border-radius: 6px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; transition: all 0.15s ease; }
         .deliverable-faq-item:hover { border-color: var(--slate); background: #eef2f7; }
@@ -465,8 +473,12 @@
             const tags = deliverable.faqTags || [];
             const matchedFAQs = ALL_FAQS.filter(f => { const t=(f.Tab||'').toLowerCase().trim(); return tags.some(tag=>t===tag.toLowerCase().trim()); }).slice(0,10);
             const rHTML = deliverable.resources.length ? deliverable.resources.map(r=>`<a class="deliverable-resource-link" href="${r.url}" target="_blank">&#128196; ${r.title}</a>`).join('') : '<p class="deliverable-empty">No resources linked yet.</p>';
-            const fHTML = matchedFAQs.length ? matchedFAQs.map(f=>`<div class="deliverable-faq-item" onclick="this.classList.toggle('open')"><div class="deliverable-faq-q">${f.Question||''}</div><div class="deliverable-faq-a">${f.Answer||''}</div></div>`).join('') : '<p class="deliverable-empty">No matching FAQs found.</p>';
-            card.innerHTML = `<div class="deliverable-card-header"><div class="deliverable-card-title">&#128204; ${deliverable.title}</div><button class="deliverable-card-close" onclick="closeDeliverableCard('${id}')">&#x2715;</button></div><p style="font-size:13px;color:var(--text-mid);margin-bottom:1rem;line-height:1.6;">${deliverable.desc}</p><div class="deliverable-card-body"><div><div class="deliverable-card-section-title">&#128218; Resources &amp; guidance</div><div class="deliverable-resource-list">${rHTML}</div></div><div><div class="deliverable-card-section-title">&#10067; Related FAQs</div><div class="deliverable-faq-list">${fHTML}</div></div></div>`;
+            const fHTML = tags.length ? `
+                <div class="deliverable-faq-chips">
+                    ${tags.map(tag => `<a class="deliverable-faq-chip" href="#faqs" onclick="setTimeout(()=>{ const tabs=document.querySelectorAll('.faq-tab'); tabs.forEach(t=>{ if(t.textContent.trim().toLowerCase()==='${tag.toLowerCase().trim()}'){t.click();} }); document.getElementById('faqs').scrollIntoView({behavior:'smooth'}); },100)">${tag}</a>`).join('')}
+                </div>` 
+                : '<p class="deliverable-empty">No FAQ topics linked yet.</p>';
+            card.innerHTML = `<div class="deliverable-card-header"><div class="deliverable-card-title">&#128204; ${deliverable.title}</div><button class="deliverable-card-close" onclick="closeDeliverableCard('${id}')">&#x2715;</button></div><p style="font-size:13px;color:var(--text-mid);margin-bottom:1rem;line-height:1.6;">${deliverable.desc}</p><div class="deliverable-card-body"><div><div class="deliverable-card-section-title">&#128218; Resources &amp; guidance</div><div class="deliverable-resource-list">${rHTML}</div></div><div><div class="deliverable-card-section-title">❓ Relevant FAQ topics <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">(click to go to section)</span></div><div class="deliverable-faq-list">${fHTML}</div></div></div>`;
             card.classList.add('open');
             setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
         }
