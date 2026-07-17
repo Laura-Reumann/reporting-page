@@ -432,10 +432,10 @@
         });
 
         let DELIVERABLES = {
-            prepare: { title: 'Prepare & engage', desc: 'Guidance and tools to help Programs prepare for the reporting cycle.', resources: [], faqTags: ['preparation', 'guidance', 'timeline'] },
-            prms:    { title: 'PRMS reporting & QA', desc: 'Data entry in PRMS for all results, followed by quality assurance before publication on the Results Dashboard.', resources: [], faqTags: ['prms', 'data entry', 'quality', 'results'] },
-            atr:     { title: 'Annual Technical Report', desc: 'Each Program and Accelerator develops an Annual Technical Report documenting results achieved.', resources: [], faqTags: ['annual technical report', 'atr', 'writing', 'editing'] },
-            pn:      { title: 'Portfolio Narrative', desc: 'A synthesis document presenting CGIAR\'s collective results and Portfolio performance.', resources: [], faqTags: ['portfolio narrative', 'synthesis'] }
+            prepare: { title: 'Prepare & engage', desc: 'Guidance and tools to help Programs prepare for the reporting cycle.', resources: [], faqTags: ['General'] },
+            prms:    { title: 'PRMS reporting & QA', desc: 'Data entry in PRMS for all results, followed by quality assurance before publication on the Results Dashboard.', resources: [], faqTags: ['PRMS Reporting Tool', 'Reporting results', 'Submitting evidence', 'Reporting geographic location of results', 'W3/bilateral results', 'Quality assurance (QA)'] },
+            atr:     { title: 'Annual Technical Report', desc: 'Each Program and Accelerator develops an Annual Technical Report documenting results achieved.', resources: [], faqTags: ['General', 'Knowledge products (output)', 'Capacity sharing for development (output)', 'Innovation development (output)', 'Innovation use (outcome)', 'Innovations (development and use)'] },
+            pn:      { title: 'Portfolio Narrative', desc: 'A synthesis document presenting CGIAR\'s collective results and Portfolio performance.', resources: [], faqTags: ['General'] }
         };
         let ALL_FAQS = [];
 
@@ -448,7 +448,7 @@
                     const id = (r.ID || '').trim().toLowerCase(); if (!id) return;
                     if (!loaded[id]) loaded[id] = { title: r.Title || DELIVERABLES[id]?.title || id, desc: r.Description || DELIVERABLES[id]?.desc || '', resources: [], faqTags: [] };
                     if (r.ResourceTitle && r.ResourceURL) loaded[id].resources.push({ title: r.ResourceTitle, url: r.ResourceURL });
-                    if (r.FAQTag) loaded[id].faqTags.push(r.FAQTag.toLowerCase());
+                    if (r.FAQTag) loaded[id].faqTags.push(r.FAQTag.trim());
                 });
                 if (Object.keys(loaded).length > 0) DELIVERABLES = loaded;
             } catch(e) {}
@@ -475,7 +475,7 @@
             const rHTML = deliverable.resources.length ? deliverable.resources.map(r=>`<a class="deliverable-resource-link" href="${r.url}" target="_blank">&#128196; ${r.title}</a>`).join('') : '<p class="deliverable-empty">No resources linked yet.</p>';
             const fHTML = tags.length ? `
                 <div class="deliverable-faq-chips">
-                    ${tags.map(tag => `<a class="deliverable-faq-chip" href="#faqs" onclick="setTimeout(()=>{ const tabs=document.querySelectorAll('.faq-tab'); tabs.forEach(t=>{ if(t.textContent.trim().toLowerCase()==='${tag.toLowerCase().trim()}'){t.click();} }); document.getElementById('faqs').scrollIntoView({behavior:'smooth'}); },100)">${tag}</a>`).join('')}
+                    ${tags.map(tag => `<a class="deliverable-faq-chip" href="#faqs" onclick="setTimeout(()=>{ const tabs=document.querySelectorAll('.faq-tab'); tabs.forEach(t=>{ if(t.textContent.trim().toLowerCase()==='${tag.toLowerCase().trim()}'){t.click();} }); document.getElementById('faqs').scrollIntoView({behavior:'smooth'}); },300)">${tag}</a>`).join('')}
                 </div>` 
                 : '<p class="deliverable-empty">No FAQ topics linked yet.</p>';
             card.innerHTML = `<div class="deliverable-card-header"><div class="deliverable-card-title">&#128204; ${deliverable.title}</div><button class="deliverable-card-close" onclick="closeDeliverableCard('${id}')">&#x2715;</button></div><p style="font-size:13px;color:var(--text-mid);margin-bottom:1rem;line-height:1.6;">${deliverable.desc}</p><div class="deliverable-card-body"><div><div class="deliverable-card-section-title">&#128218; Resources &amp; guidance</div><div class="deliverable-resource-list">${rHTML}</div></div><div><div class="deliverable-card-section-title">❓ Relevant FAQ topics <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">(click to go to section)</span></div><div class="deliverable-faq-list">${fHTML}</div></div></div>`;
