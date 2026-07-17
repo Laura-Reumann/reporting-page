@@ -546,11 +546,15 @@
                 const rows=await fetchCSV(SHEET_URLS.faqs); ALL_FAQS=rows;
                 const tabs={};rows.forEach(r=>{const tab=r.Tab||'General';if(!tabs[tab])tabs[tab]=[];tabs[tab].push(r);});
                 const tabKeys=Object.keys(tabs);
-                container.innerHTML=`<div class="faq-tabs">${tabKeys.map((tab,i)=>`<button class="faq-tab ${i===0?'active':''}" onclick="switchFAQTab(this,'faq-${slugify(tab)}')">${tab}</button>`).join('')}</div>${tabKeys.map((tab,i)=>`<div class="faq-content ${i===0?'active':''}" id="faq-${slugify(tab)}">${tabs[tab].map(r=>`<div class="faq-item"><button class="faq-question" onclick="toggleFAQ(this)"><span>${r.Question||''}</span><span class="faq-toggle">&#9660;</span></button><div class="faq-answer">${r.Answer||''}</div></div>`).join('')}</div>`).join('')}`;
+                container.innerHTML=`<div class="faq-tabs">${tabKeys.map((tab,i)=>`<button class="faq-tab ${i===0?'active':''}" onclick="switchFAQTab(this,'faq-${slugify(tab)}')">${tab}</button>`).join('')}</div>${tabKeys.map((tab,i)=>`<div class="faq-content ${i===0?'active':''}" id="faq-${slugify(tab)}">${tabs[tab].map(r=>`<div class="faq-item"><button class="faq-question" onclick="toggleFAQ(this)"><span>${r.Question||''}</span><span class="faq-toggle">&#9660;</span></button><div class="faq-answer">${linkifyEmails(r.Answer||'')}</div></div>`).join('')}</div>`).join('')}`;
             } catch(e){container.innerHTML='<p class="error-msg">Could not load FAQs.</p>';}
         }
 
         function switchFAQTab(tab,tabId){document.querySelectorAll('.faq-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.faq-content').forEach(c=>c.classList.remove('active'));document.getElementById(tabId).classList.add('active');}
+        function linkifyEmails(text) {
+            return text.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
+                '<a href="mailto:$1" style="color:var(--green-lighter);font-weight:500;">$1</a>');
+        }
         function toggleFAQ(button){const answer=button.parentElement.querySelector('.faq-answer'),toggle=button.querySelector('.faq-toggle'),tab=button.closest('.faq-content');if(tab){tab.querySelectorAll('.faq-answer').forEach(a=>{if(a!==answer)a.classList.remove('open');});tab.querySelectorAll('.faq-toggle').forEach(t=>{if(t!==toggle)t.classList.remove('open');});}toggle.classList.toggle('open');answer.classList.toggle('open');}
         function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 
